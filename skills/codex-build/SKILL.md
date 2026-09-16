@@ -7,7 +7,7 @@ description: "Have Codex implement a concrete work order and have Claude indepen
 
 Compatibility entry point: the builder is explicitly Codex. The shared workflow and executable live in the sibling `claudex-loop` skill; install that skill alongside this one.
 
-Load the shared [build reference](../claudex-loop/references/build.md) and [runtime reference](../claudex-loop/references/runtime.md). Preserve `SPEC_FILE` (mapped to the runner's `--plan`), `LOG_FILE`, `PROOF_CMD`, `MAX_FIX_ROUNDS`, and explicit model/effort arguments. The spec may have any filename; never substitute PLAN.md silently.
+Load the shared [build reference](../claudex-loop/references/build.md) and [runtime reference](../claudex-loop/references/runtime.md). Preserve `SPEC_FILE` (mapped to the runner's `--plan`), `LOG_FILE`, `PROOF_CMD`, `MAX_FIX_ROUNDS`, and explicit model/effort arguments. Without an explicit builder or inspector model, apply the model rules in the sibling [claudex-loop skill](../claudex-loop/SKILL.md) (section on model selection) and pass `--model`/`--effort` explicitly; never let the build run on the Codex CLI default. The spec may have any filename; never substitute PLAN.md silently.
 
 - In Claude Code, Claude coordinates and delegates implementation to Codex through the runner's `build --host claude --builder codex` path. Claude then inspects all changes and independently runs proof checks. Log evidence and limitations. A fresh Claude CLI inspector is also available through the shared runner if useful.
 - In Codex, implement in the current host session with its normal tools, then use a fresh Claude inspector through `inspect --host codex --builder codex`. Do not ask Codex to certify its own changes as independent review.

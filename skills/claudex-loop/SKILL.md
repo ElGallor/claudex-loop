@@ -18,7 +18,16 @@ Identify the actual host from your runtime, not PATH, installed skills, model-na
 
 Honor `builder=claude|codex`. The inspector is always the other provider. The host remains coordinator even when the other provider builds. To swap the planner, start the conversation in the other host; do not pretend a CLI reviewer is the user's planning conversation.
 
-Model selection is independent of provider roles. Preserve the host's selected model. Review/build CLI calls inherit their own configuration unless `reviewer_model`, `builder_model`, or `inspector_model` is supplied; map these to the runner's `--model` for that invocation. Apply an explicit `*_effort` similarly. Fable 5.1 and GPT-6 Astra are suitable explicit choices, not mandatory pins. A model in the host UI does not prove which model a separate CLI will use. Report requested and observed model information separately; report an unresolved CLI default honestly. Never silently fall back to another model/provider on a failure.
+Model selection is independent of provider roles. Preserve the host's selected model. An explicit `reviewer_model`, `builder_model`, or `inspector_model` always wins; map it to the runner's `--model` for that invocation, and apply an explicit `*_effort` similarly.
+
+**Without an explicit choice, do not fall back to the CLI default.** The CLI defaults (e.g. Codex `gpt-5.6-terra` at medium effort) predate this user's measured routing and are the wrong answer for most loop roles. Before the first CLI call, read the section "Select a practical candidate" in the sibling [claudex-route skill](../claudex-route/SKILL.md) (including the allowance check) and pass an explicit `--model` and `--effort` for every role:
+
+- **Reviewer / inspector (judgement work):** Codex side `gpt-6-astra` with `--effort high`; Claude side `claude-fable-5-1`. Never `gpt-5.6-luna` or `gpt-5.6-terra` for a judgement review - a weak "APPROVED" is worse than none.
+- **Builder:** choose by the kind of difficulty. Clear brief with mostly routine work: `gpt-5.6-terra`. Hard but clearly stated work, deep debugging (kept whole, not split) or a second attempt after Terra failed: `gpt-6-astra`. Narrow machine-checkable work: `gpt-5.6-luna`. On the Claude side, Fable only for conception, never for execution of an agreed design; volume-heavy work goes to Opus.
+- **Reviewer is not the author:** if a model built the code, the inspection uses a different model (a different provider is best). Astra never inspects Astra's own changes.
+- **Allowance:** above 75 percent seven-day Anthropic usage, move clear-brief roles to the Codex models and say so in the log.
+
+Echo the chosen model and effort per role, with a one-line reason drawn from the route skill, before starting. A model in the host UI does not prove which model a separate CLI will use. Report requested and observed model information separately; report an unresolved CLI default honestly. Never silently fall back to another model/provider on a failure.
 
 Read [the runtime reference](references/runtime.md) before launching a CLI. Resolve its runner relative to this installed SKILL.md, never relative to the project being reviewed. Use absolute paths when launching it.
 
