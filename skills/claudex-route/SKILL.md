@@ -48,8 +48,16 @@ two multi-part logic tasks, every model twice) found no quality separation in th
 Terra, Astra and Opus each passed 8 of 8 with zero defects. Opus was two to three times faster and
 needed a third of the model turns, but cost 1.65 USD where the Codex models cost only allowance.
 For work of that size the cheap route is therefore not a compromise, and speed is the only thing the
-paid models buy. The check says nothing about harder work - it did not separate Terra from Astra, so
-the scopes above still rest on judgement, not on evidence.
+paid models buy. A second check the same day (18 runs: one contradiction-hunting task over a twelve-file record and
+one open-ended concept task, Luna, Terra and Astra three times each) did separate them - but only
+through blind review against fixed criteria, because the automated form checks again gave all
+eighteen full marks. Opus judged the anonymised results without knowing the authors, and Astra took
+the top three places in both tasks. The difference was substance, not style: only Astra traced the
+faulty value through the code into the deletion statement, and only Astra kept concept and plan free
+of contradictions. The single fabricated quotation in the field came from Luna. Terra and Luna did
+not separate from each other. Astra paid for this with two to three times the wall-clock time and
+roughly twice the input volume, so the scopes above hold as written: Astra where the difficulty is
+real, Terra where the brief is clear, and no form check will tell the two apart.
 
 Use local model listings and CLI status/help when accessible without launching a model task. Distinguish listed, authenticated, and proven runnable: none alone establishes the others. If access or the active model is unknown, make the recommendation conditional and explain what needs checking. Do not launch paid comparison calls just to choose a model.
 
