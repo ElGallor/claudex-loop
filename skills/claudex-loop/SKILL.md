@@ -51,7 +51,7 @@ Echo roles, paths, round limits, requested models and inspection opt-out before 
 
 ## Phase 0 — Recon
 
-For existing projects, inspect relevant code, dependencies, callers and writers of shared state. Read existing `CONTEXT.md` / `CONTEXT-MAP.md` and relevant ADRs. For greenfield work, research prior art, a reasonable stack and concrete failure modes when useful. Respect an explicit research depth. Deep multi-agent research requires explicit opt-in and an available tool; otherwise use supported targeted research, and report the limitation. Do not require a proprietary Workflow tool or hard-code a research-agent model.
+For existing projects, inspect relevant code, dependencies, callers and writers of shared state. Read existing `CONTEXT.md` / `CONTEXT-MAP.md` and relevant ADRs. For greenfield work, research prior art, a reasonable stack and concrete failure modes when useful. Respect an explicit research depth. Deep multi-agent research requires explicit opt-in and an available tool; otherwise use supported targeted research, and report the limitation. Do not require a proprietary Workflow tool. Never let recon or research run on Sonnet or Haiku: built-in subagents such as Explore default to Haiku, so either read the code in the host session, pass an explicit model allowed by the [claudex-route skill](../claudex-route/SKILL.md), or hand mechanical sweeps to Codex (`gpt-5.6-luna` / `gpt-5.6-terra`).
 
 Discover relevant skills through the host's available catalog and the other provider's documented skill locations when accessible. Record only relevant proposed dependencies. Do not assume host MCP, browser, credentials or skills transfer to the other CLI. Verify required build capabilities before relying on them.
 
