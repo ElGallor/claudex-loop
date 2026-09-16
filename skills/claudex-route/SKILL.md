@@ -43,9 +43,26 @@ Start with models available in the user's environment. The list below records th
 
 At the edges (Luna, Fable) the assignment is binding; in the middle (Terra, Astra, Opus) the scopes overlap and the choice is judgement. Decide there by the *kind* of difficulty: unclear assignment - upwards; clear assignment with much routine - downwards; very large input - Opus.
 
+A measured check (2026-09-16, `Werkzeuge/modell-bench`, 32 runs: two mid-sized coding tasks and
+two multi-part logic tasks, every model twice) found no quality separation in that band: Luna,
+Terra, Astra and Opus each passed 8 of 8 with zero defects. Opus was two to three times faster and
+needed a third of the model turns, but cost 1.65 USD where the Codex models cost only allowance.
+For work of that size the cheap route is therefore not a compromise, and speed is the only thing the
+paid models buy. The check says nothing about harder work - it did not separate Terra from Astra, so
+the scopes above still rest on judgement, not on evidence.
+
 Use local model listings and CLI status/help when accessible without launching a model task. Distinguish listed, authenticated, and proven runnable: none alone establishes the others. If access or the active model is unknown, make the recommendation conditional and explain what needs checking. Do not launch paid comparison calls just to choose a model.
 
 For price-sensitive choices or comparative claims, consult current official [OpenAI model information](https://developers.openai.com/api/docs/models) and [Anthropic model information](https://platform.claude.com/docs/en/about-claude/models/overview). Check [Codex usage guidance](https://learn.chatgpt.com/docs/pricing) when using subscription allowances. API token prices are different from subscription usage; task costs also include context transfer, reasoning, retries, and host verification. The ranking above is a user preference, not a price record: no figures without a checkable source.
+
+The Anthropic allowance is measurable, so do not guess it. A KI-OS poller refreshes
+`SecondBrain/index/usage-limits.json` every 15 minutes from the same endpoint as `/usage`; it
+carries `fiveHour.pct` and `week.pct`, and the Claude Code status line shows both. Read it before
+routing, but only trust it when it is under 60 minutes old - a stale or missing file means unknown,
+not zero. Keep the seven-day figure below 60 percent. Above 75 percent, shift decisively to the
+Codex subscription models: anything with a clear brief goes to Luna or Terra, Opus and Fable are
+reserved for work that demonstrably needs them, and the brief says that the allowance drove the
+choice.
 
 ## Return a short routing brief
 
