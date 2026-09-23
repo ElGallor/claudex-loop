@@ -63,14 +63,28 @@ Use local model listings and CLI status/help when accessible without launching a
 
 For price-sensitive choices or comparative claims, consult current official [OpenAI model information](https://developers.openai.com/api/docs/models) and [Anthropic model information](https://platform.claude.com/docs/en/about-claude/models/overview). Check [Codex usage guidance](https://learn.chatgpt.com/docs/pricing) when using subscription allowances. API token prices are different from subscription usage; task costs also include context transfer, reasoning, retries, and host verification. The ranking above is a user preference, not a price record: no figures without a checkable source.
 
-The Anthropic allowance is measurable, so do not guess it. A KI-OS poller refreshes
-`SecondBrain/index/usage-limits.json` every 15 minutes from the same endpoint as `/usage`; it
-carries `fiveHour.pct` and `week.pct`, and the Claude Code status line shows both. Read it before
-routing, but only trust it when it is under 60 minutes old - a stale or missing file means unknown,
-not zero. Keep the seven-day figure below 60 percent. Above 75 percent, shift decisively to the
-Codex subscription models: anything with a clear brief goes to Luna or Terra, Opus and Fable are
-reserved for work that demonstrably needs them, and the brief says that the allowance drove the
-choice.
+Both subscription allowances are measurable, so do not guess them. Before routing, read the
+seven-day figure of each side:
+
+- **Anthropic** (Opus, Fable): `week.pct` in `SecondBrain/index/usage-limits.json`, refreshed every
+  15 minutes by a KI-OS poller from the same endpoint as `/usage`.
+- **OpenAI** (Luna, Terra, Astra): `week.pct` in `~/.claude/statusline-openai-usage.json`, taken
+  from the `rate_limits` the Codex CLI writes into its session logs. If the file is older than
+  5 minutes, refresh it first with `node ~/.claude/statusline-openai-poll.mjs` (local files only,
+  no network, no model call).
+
+Trust a figure only when its `ts` is under 60 minutes old; a stale, missing or `null` figure means
+unknown, not zero. The Claude Code status line shows both.
+
+**Balance rule:** keep the two seven-day percentages as equal as possible. Compute the gap as
+Anthropic minus OpenAI. Within 5 points the choice follows the scopes above alone. Beyond that,
+the side that has used more gives way wherever the scopes overlap: with Anthropic ahead, clear
+briefs go to Luna, Terra or Astra, and Opus and Fable keep only work that demonstrably needs them;
+with OpenAI ahead, overlap work in the middle band (Terra/Astra vs. Opus) goes to Opus, and review
+of Codex-written code goes to Claude. The larger the gap, the more decisively to shift. The
+binding edges still hold - the balance never sends a Luna task to Fable or a large conception to
+Luna. When one figure is unknown, route by scope only and say that the balance could not be
+checked. The brief names both figures when they drove the choice.
 
 ## Return a short routing brief
 

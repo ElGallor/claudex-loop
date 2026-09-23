@@ -25,7 +25,7 @@ Model selection is independent of provider roles. Preserve the host's selected m
 - **Reviewer / inspector (judgement work):** Codex side `gpt-6-astra` with `--effort high`; Claude side `claude-fable-5-1`. Never `gpt-5.6-luna` or `gpt-5.6-terra` for a judgement review - a weak "APPROVED" is worse than none.
 - **Builder:** choose by the kind of difficulty. Clear brief with mostly routine work: `gpt-5.6-terra`. Hard but clearly stated work, deep debugging (kept whole, not split) or a second attempt after Terra failed: `gpt-6-astra`. Narrow machine-checkable work: `gpt-5.6-luna`. On the Claude side, Fable only for conception, never for execution of an agreed design; volume-heavy work goes to Opus.
 - **Reviewer is not the author:** if a model built the code, the inspection uses a different model (a different provider is best). Astra never inspects Astra's own changes.
-- **Allowance:** above 75 percent seven-day Anthropic usage, move clear-brief roles to the Codex models and say so in the log.
+- **Allowance:** apply the balance rule from claudex-route - keep the seven-day Anthropic and OpenAI percentages equal; with a gap above 5 points, move overlap roles to the side that has used less and log both figures.
 
 Echo the chosen model and effort per role, with a one-line reason drawn from the route skill, before starting. A model in the host UI does not prove which model a separate CLI will use. Report requested and observed model information separately; report an unresolved CLI default honestly. Never silently fall back to another model/provider on a failure.
 
