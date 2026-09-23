@@ -32,16 +32,16 @@ Prefer a reviewer who did not write the work. Independence is a gradient, not a 
 
 ## Select a practical candidate
 
-Start with models available in the user's environment. The list below records the user's own routing preferences (September 2026), not a permanent leaderboard. By cost per task: Luna < Terra < Astra < Opus < Fable. Luna, Terra and Astra run through the Codex CLI on a subscription allowance; Opus and Fable bill real money. Each entry gives a short scope and then what the model should not be used for - exclusions age better than task lists and also decide cases nobody listed.
+Start with models available in the user's environment. The list below records the user's own routing preferences (September 2026), not a permanent leaderboard. By cost per task: Luna < Sol < Astra < Opus < Fable. Luna, Sol and Astra run through the Codex CLI on a subscription allowance; Opus and Fable bill real money. GPT-6 Luna and GPT-6 Sol need Codex CLI 0.156.1 or newer - older versions fail with HTTP 400 "model is not supported when using Codex with a ChatGPT account" (checked 2026-09-23). The GPT-5.6 models remain callable but are superseded here. Each entry gives a short scope and then what the model should not be used for - exclusions age better than task lists and also decide cases nobody listed.
 
-- **GPT-5.6 Luna** (`gpt-5.6-luna`), cheapest: narrow, repeatable work with a machine-checkable result - fixtures, extraction, doc updates, small isolated helpers - and checks a machine can decide: a test run, schema validity, completeness against a given list, diff size. *Never* for judgement checks such as "is this code good" or "is the architecture sound": a "looks fine" from a model too weak to judge reads like an approval and is worse than no review at all. *Not* when no acceptance criterion can be stated.
-- **GPT-5.6 Terra** (`gpt-5.6-terra`): standard coding that needs more judgement and context than a Luna task - routine backend work, refactoring, comments and documentation, index building and file summaries. *Not* for architecture decisions, and *not* for defects whose cause is still unknown.
-- **GPT-6 Astra** (`gpt-6-astra`): hard but clearly stated assignments - complex algorithms, performance work, demanding logic - and deep debugging, which goes to it whole instead of being split: the effort sits in finding the cause, the patch is often one line, and before the diagnosis nobody knows what the parts would be. From Claude Code it is the candidate for cross-provider review. *Not* for ordinary mid-sized work that Terra handles - the allowance spent there buys nothing and is missing from the work that needs it. *Not* when the assignment itself is still unclear, or when the input exceeds the context window. Where Astra wrote the code, Astra is not its reviewer: the more it executes, the less it can check, and the review goes back to another model.
-- **Claude Opus** (`claude-opus-5`): work whose difficulty lies in *volume* rather than logic - legacy code bases, long specifications, assessments spanning many files. The distinguishing feature against Astra is the context window, not model strength; with a small input Astra is the cheaper route. *Not* on repository size alone, which does not prove a need for that much context at once. *Not* for condensing a large input per task so it fits a smaller window - reading the full context is exactly the expensive part, so the saving is cancelled; only an index built once and reused is worth it, and building it belongs to Terra or Luna.
+- **GPT-6 Luna** (`gpt-6-luna`), cheapest: narrow, repeatable work with a machine-checkable result - fixtures, extraction, doc updates, small isolated helpers - and checks a machine can decide: a test run, schema validity, completeness against a given list, diff size. *Never* for judgement checks such as "is this code good" or "is the architecture sound": a "looks fine" from a model too weak to judge reads like an approval and is worse than no review at all. *Not* when no acceptance criterion can be stated.
+- **GPT-6 Sol** (`gpt-6-sol`), successor to GPT-5.6 Terra in this role: standard coding that needs more judgement and context than a Luna task - routine backend work, refactoring, comments and documentation, index building and file summaries. *Not* for architecture decisions, and *not* for defects whose cause is still unknown.
+- **GPT-6 Astra** (`gpt-6-astra`): hard but clearly stated assignments - complex algorithms, performance work, demanding logic - and deep debugging, which goes to it whole instead of being split: the effort sits in finding the cause, the patch is often one line, and before the diagnosis nobody knows what the parts would be. From Claude Code it is the candidate for cross-provider review. *Not* for ordinary mid-sized work that Sol handles - the allowance spent there buys nothing and is missing from the work that needs it. *Not* when the assignment itself is still unclear, or when the input exceeds the context window. Where Astra wrote the code, Astra is not its reviewer: the more it executes, the less it can check, and the review goes back to another model.
+- **Claude Opus** (`claude-opus-5`): work whose difficulty lies in *volume* rather than logic - legacy code bases, long specifications, assessments spanning many files. The distinguishing feature against Astra is the context window, not model strength; with a small input Astra is the cheaper route. *Not* on repository size alone, which does not prove a need for that much context at once. *Not* for condensing a large input per task so it fits a smaller window - reading the full context is exactly the expensive part, so the saving is cancelled; only an index built once and reused is worth it, and building it belongs to Sol or Luna.
 - **Claude Fable 5.1** (`claude-fable-5-1`), most expensive: conception and decomposition - cutting large undertakings into precise assignments, designing schemas, security concepts and roadmaps. From Codex it is the candidate for cross-provider review. *Not* for execution once a design is agreed: from there on the work is derivation, and a cheaper model does it from the stated brief.
-- **Sonnet and Haiku are not used** in this environment - not as builder, reviewer, inspector or research subagent. Built-in Claude Code agents that default to them (e.g. Explore) must get an explicit model from this list, or the work goes to Luna/Terra instead. Cross-provider delegation is not an obligation.
+- **Sonnet and Haiku are not used** in this environment - not as builder, reviewer, inspector or research subagent. Built-in Claude Code agents that default to them (e.g. Explore) must get an explicit model from this list, or the work goes to Luna/Sol instead. Cross-provider delegation is not an obligation.
 
-At the edges (Luna, Fable) the assignment is binding; in the middle (Terra, Astra, Opus) the scopes overlap and the choice is judgement. Decide there by the *kind* of difficulty: unclear assignment - upwards; clear assignment with much routine - downwards; very large input - Opus.
+At the edges (Luna, Fable) the assignment is binding; in the middle (Sol, Astra, Opus) the scopes overlap and the choice is judgement. Decide there by the *kind* of difficulty: unclear assignment - upwards; clear assignment with much routine - downwards; very large input - Opus.
 
 A measured check (2026-09-16, `Werkzeuge/modell-bench`, 32 runs: two mid-sized coding tasks and
 two multi-part logic tasks, every model twice) found no quality separation in that band: Luna,
@@ -59,6 +59,10 @@ not separate from each other. Astra paid for this with two to three times the wa
 roughly twice the input volume, so the scopes above hold as written: Astra where the difficulty is
 real, Terra where the brief is clear, and no form check will tell the two apart.
 
+Both checks ran on GPT-5.6 Luna and Terra. Their GPT-6 successors have so far only passed a smoke
+test (2026-09-23: both solved a small checkable coding task correctly); until a bench run places
+them, read "Terra" in these results as the role now held by Sol.
+
 Use local model listings and CLI status/help when accessible without launching a model task. Distinguish listed, authenticated, and proven runnable: none alone establishes the others. If access or the active model is unknown, make the recommendation conditional and explain what needs checking. Do not launch paid comparison calls just to choose a model.
 
 For price-sensitive choices or comparative claims, consult current official [OpenAI model information](https://developers.openai.com/api/docs/models) and [Anthropic model information](https://platform.claude.com/docs/en/about-claude/models/overview). Check [Codex usage guidance](https://learn.chatgpt.com/docs/pricing) when using subscription allowances. API token prices are different from subscription usage; task costs also include context transfer, reasoning, retries, and host verification. The ranking above is a user preference, not a price record: no figures without a checkable source.
@@ -68,7 +72,7 @@ seven-day figure of each side:
 
 - **Anthropic** (Opus, Fable): `week.pct` in `SecondBrain/index/usage-limits.json`, refreshed every
   15 minutes by a KI-OS poller from the same endpoint as `/usage`.
-- **OpenAI** (Luna, Terra, Astra): `week.pct` in `~/.claude/statusline-openai-usage.json`, taken
+- **OpenAI** (Luna, Sol, Astra): `week.pct` in `~/.claude/statusline-openai-usage.json`, taken
   from the `rate_limits` the Codex CLI writes into its session logs. If the file is older than
   5 minutes, refresh it first with `node ~/.claude/statusline-openai-poll.mjs` (local files only,
   no network, no model call).
@@ -79,8 +83,8 @@ unknown, not zero. The Claude Code status line shows both.
 **Balance rule:** keep the two seven-day percentages as equal as possible. Compute the gap as
 Anthropic minus OpenAI. Within 5 points the choice follows the scopes above alone. Beyond that,
 the side that has used more gives way wherever the scopes overlap: with Anthropic ahead, clear
-briefs go to Luna, Terra or Astra, and Opus and Fable keep only work that demonstrably needs them;
-with OpenAI ahead, overlap work in the middle band (Terra/Astra vs. Opus) goes to Opus, and review
+briefs go to Luna, Sol or Astra, and Opus and Fable keep only work that demonstrably needs them;
+with OpenAI ahead, overlap work in the middle band (Sol/Astra vs. Opus) goes to Opus, and review
 of Codex-written code goes to Claude. The larger the gap, the more decisively to shift. The
 binding edges still hold - the balance never sends a Luna task to Fable or a large conception to
 Luna. When one figure is unknown, route by scope only and say that the balance could not be
