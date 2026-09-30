@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "option", "konfidenz", "begruendung", "belege", "einwaende",
+    "zugestaendnisse", "offen", "pre_mortem", "markdown"
+  ],
+  "properties": {
+    "option": { "type": "string", "pattern": "^O[0-9]+$" },
+    "konfidenz": { "type": "number", "minimum": 0, "maximum": 1 },
+    "begruendung": { "type": "string" },
+    "belege": { "type": "array", "items": { "type": "string" } },
+    "einwaende": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "schwere", "gegen", "beleg", "aufloesung"],
+        "properties": {
+          "id": { "type": "string" },
+          "schwere": { "type": "string", "enum": ["hoch", "mittel", "gering"] },
+          "gegen": { "type": "string" },
+          "beleg": { "type": "string" },
+          "aufloesung": { "type": "string", "enum": ["offen", "aufgeloest", "zurueckgezogen"] }
+        }
+      }
+    },
+    "zugestaendnisse": { "type": "array", "items": { "type": "string" } },
+    "offen": { "type": "array", "items": { "type": "string" } },
+    "pre_mortem": { "type": ["string", "null"] },
+    "markdown": { "type": "string" }
+  }
+}

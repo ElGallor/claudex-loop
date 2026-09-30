@@ -7,14 +7,16 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 </div>
 
+> **Fork note (ElGallor, 2026-09-30):** only `claudex-route` is active in this fork. It carries model routing, second opinions and discussion rounds (`skills/claudex-route/references/debatte-v1.md`). `claudex-loop`, `codex-review` and `codex-build` are deactivated by renaming their `SKILL.md` to `SKILL.md.deaktiviert`; rename back to reactivate. The text below describes the upstream layout.
+
 This repository contains separate skills for choosing a model, making a one-off handoff, and running a complete development workflow. They share a repository and plugin distribution; **Claudex Route is independent of the Claudex Loop workflow**.
 
 | Skill | Use it for | Dependencies |
 |---|---|---|
 | [`claudex-route`](skills/claudex-route/SKILL.md) | A model recommendation or one scoped handoff | Self-contained; selected CLI needed only for delegation |
-| [`claudex-loop`](skills/claudex-loop/SKILL.md) | Requirements, plan review, implementation, and final inspection | Both CLIs and Python 3.10+ |
-| [`codex-review`](skills/codex-review/SKILL.md) | Explicit Codex plan-review compatibility command | Shared `claudex-loop` skill |
-| [`codex-build`](skills/codex-build/SKILL.md) | Explicit Codex builder compatibility command | Shared `claudex-loop` skill |
+| [`claudex-loop`](skills/claudex-loop/SKILL.md.deaktiviert) | Requirements, plan review, implementation, and final inspection | Both CLIs and Python 3.10+ |
+| [`codex-review`](skills/codex-review/SKILL.md.deaktiviert) | Explicit Codex plan-review compatibility command | Shared `claudex-loop` skill |
+| [`codex-build`](skills/codex-build/SKILL.md.deaktiviert) | Explicit Codex builder compatibility command | Shared `claudex-loop` skill |
 
 ## Claudex Loop
 
