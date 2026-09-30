@@ -119,10 +119,10 @@ unknown, not zero. The Claude Code status line shows both.
 Anthropic minus OpenAI. Within 5 points the choice follows the scopes above alone. Beyond that,
 the side that has used more gives way wherever the scopes overlap: with Anthropic ahead, clear
 briefs go to Luna or Sol instead of Sonnet, and Opus and Fable keep only work that demonstrably
-needs them; with OpenAI ahead, clear-brief building moves from Sol to Sonnet at `low`, and Astra
-is spent only on decisions that matter. Bulk and diligence work stays with Sol as long as the
-OpenAI allowance has room at all; it moves to Sonnet only when that allowance is nearly used up,
-and the brief says so. The larger the gap, the more decisively to shift. The binding edges still
+needs them; with OpenAI ahead, Astra is spent only on decisions that matter. **Sol is exempt
+from the balance and has no threshold:** bulk and diligence work always goes to Sol, and whatever
+Sol can carry goes to Sol as often as possible, at any OpenAI figure - the user sizes that
+subscription for it (decision 2026-09-30). The larger the gap, the more decisively to shift. The binding edges still
 hold - the balance never sends a Luna task to Fable, a large conception to Luna, or a work order
 to Astra. When one figure is unknown, route by scope only and say that the balance could not be
 checked. The brief names both figures when they drove the choice.
