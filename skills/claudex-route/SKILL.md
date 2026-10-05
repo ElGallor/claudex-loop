@@ -31,12 +31,12 @@ Pick the next step: stay, second opinion, discussion round, investigate blocker,
 
 ## Models
 
-Cost per task: Luna < Sol < Astra; Sonnet < Opus < Fable. Luna/Sol/Astra = Codex CLI, OpenAI allowance. Sonnet/Opus/Fable = Anthropic allowance (spare it). Flash = MiniMax subscription, billed per request (per user), Claude CLI profile `minimax-m3`. Unlisted models (incl. `MiniMax-M3` without Flash): not used. Haiku: never; built-in agents defaulting to it (e.g. Explore) get explicit `sonnet`, or the sweep goes to Sol/Flash/Luna.
+Cost per task: Luna < Sol < Astra; Sonnet < Opus < Fable. Luna/Sol/Astra = Codex, OpenAI allowance. Sonnet/Opus/Fable = Anthropic allowance (spare it). Flash = MiniMax legacy plan (Starter/Lite: measured >= 1,240, plan ~1,500 requests/5 h + weekly cap; live: `coding_plan/remains`), profile `minimax-m3`. Unlisted models (incl. plain `MiniMax-M3`): unused. Haiku: never; built-in agents defaulting to it (e.g. Explore) get explicit `sonnet`, or the sweep goes to Sol/Flash/Luna.
 
 | Model | Effort | For | Not for |
 |---|---|---|---|
 | **Sol** `gpt-6.1-sol` | `low` | Default builder: clear changes/implementation as ONE undivided brief. All bulk and diligence work, whoever coordinates: reading, sweeps, inventories, summaries, routine backend, refactoring, docs, reports, documents, plans, analyses. No allowance threshold. | Architecture decisions. Unknown-cause defects. Never `high`. `medium` only if caller measured it for that job. |
-| **Flash** `MiniMax-M3.1-Flash-Preview` | `low` | Builder beside Sol for clear build and diligence: implementation, known-cause fixes, refactoring, docs, inventories, summaries, reports. Sol vs Flash: freer allowance decides; Codex empty -> Flash. Per-request billing: one large coherent brief (all paths, steps, acceptance) that runs in few turns; never piecemeal. Host re-checks quotes, figures, facts. Concepts only as draft, Opus checks. | Judgement, gates, acceptance, assignment/classification quality, unknown-cause search, security code. |
+| **Flash** `MiniMax-M3.1-Flash-Preview` | `low` | Builder beside Sol for clear build and diligence: implementation, known-cause fixes, refactoring, docs, inventories, summaries, reports. Sol vs Flash: freer allowance decides; Codex empty -> Flash. Request quota: one large coherent brief (all paths, steps, acceptance), few turns, never piecemeal. Host re-checks quotes, figures, facts. Concepts only as draft, Opus checks. | Judgement, gates, acceptance, assignment/classification quality, unknown-cause search, security code. |
 | **Luna** `gpt-6-luna` | `high` | Narrow, repeatable, machine-checkable: fixtures, extraction, small helpers, machine-decidable checks. | Judgement checks. Anything without stated acceptance criterion. Never `low`/`medium` (stops before editing). |
 | **Astra** `gpt-6-astra` | `low` build/review, `high` debate | Hard builds: unknown cause, deep debugging taken whole, demanding logic, tracing a value through code. End review of risky builds - once, at the end, read-only. Risky = close to money, gate/security code, field/interface renames with silent consumers. Other side in second opinions and discussion rounds. | Clear builds. End review on every build. Coordinating sub-workers (double cost, no time gain). |
 | **Opus** `claude-opus-5-5` | `high` | Delegate, accept, judge. One side of every discussion round. | Any building. Bulk reading. Condensing large input per task. |
@@ -50,7 +50,7 @@ Order per work slot:
 3. Hard only because vague -> clarify first (goal, inputs as paths, steps, output format, machine-checkable acceptance), then Sol.
 4. Opus at no build slot. Only delegating, accepting, judging - incl. Claude-only slots of step 1 with cause-finding, judgement or money.
 
-Balance: keep 7-day usage of both subscriptions equal within the scopes. Gap <= 5 points: scopes decide. Larger: heavier side gives way where scopes overlap. Sol and Flash exempt, no threshold. Never build work back to Opus. Figure unknown -> route by scope, say so. Where to read figures, freshness, availability, prices: [kontingent.md](references/kontingent.md).
+Balance: keep all three 7-day figures equal. Gap <= 5 points: scopes decide. Larger: heavier side gives way where scopes overlap. Sol and Flash exempt, no threshold. Never build work back to Opus. Figure unknown -> route by scope, say so. Figures, freshness, availability, prices: [kontingent.md](references/kontingent.md).
 
 Evidence (bench checks, credits, price comparison, CLI versions): [messbelege.md](references/messbelege.md). Read only when a choice is contested or a figure is asked. Never quote figures from memory.
 
