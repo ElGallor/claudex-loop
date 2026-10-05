@@ -13,6 +13,10 @@ seven-day figure of each side:
   from the `rate_limits` the Codex CLI writes into its session logs. If the file is older than
   5 minutes, refresh it first with `node ~/.claude/statusline-openai-poll.mjs` (local files only,
   no network, no model call).
+- **MiniMax** (Flash): `GET https://api.minimax.io/v1/api/openplatform/coding_plan/remains` with
+  `Authorization: Bearer $MINIMAX_API_KEY` (never print the key); entry `model_name: general`,
+  fields `current_interval_remaining_percent` (5-hour window) and `current_weekly_remaining_percent`.
+  These are percent *remaining*, not used. Compare with Sol's figure only to pick between the two.
 
 Trust a figure only when its `ts` is under 60 minutes old; a stale, missing or `null` figure means
 unknown, not zero. The Claude Code status line shows both.
