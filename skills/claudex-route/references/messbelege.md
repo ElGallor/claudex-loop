@@ -96,6 +96,22 @@ only partially passed (Astra was not at the top), so S4 ranks against Astra are 
 Sol 6.1 sets more starting values of its own in S5 (8-9 per cell against 5 for Sol 6 medium).
 The Sol 6.1 credit rate is provisional; durations were not isolated from parallel machine load.
 
+## Haiku 5.5 (bench `hk55`, 2026-10-07)
+
+`Werkzeuge/modell-bench/ergebnisse/hk55-bericht.md`; `claude-haiku-5-5` high and medium, 3 runs each.
+S0-S5: 54/54 passed; 0.003-0.025 USD per run (CLI-reported); 100-200 output tokens/s, but 2-4 times
+Sonnet's output, so S2/S3 runs took 30-55 s against Sonnet's 15-23 s and Sol 6.1 low's 35-135 s.
+Blind review (Opus, fixed criteria, 13 documents per task; S4 max 20, S5 max 24), means:
+Sol 6.1 low 20.0 / 22.5, Haiku high 19.0 / 21.0, Sonnet 5.5 medium 18.5 / 21.5,
+Haiku medium 17.0 / 21.7, Flash low 17.7 / 12.7. Haiku medium invented line numbers in 2 of 3 S4 runs,
+high in none. Calibration limited: September anchor documents were gone; only fresh runs of the
+same competitors were mixed in (Sol and Sonnet n=2).
+BENCH-K: K1 lost 0 relevant paragraphs, flagged 12-16 of 17 irrelevant ones (Codex 17);
+K2 detected 79-88 % of mutations (Codex 56-69 %), but only 1 of 4 caveat mutations.
+Classification v2: hypothesis link 0.66 (Luna 6 high 0.52, Sol 6.1 low 0.67), candidate relevance
+0.45 (Luna 0.70, Sol 0.50), value level 0.54 (Sol 0.69); confidence almost never >= 0.90, so a
+confidence gate would hand on 80-100 % of cases. Hence: build and research yes, gated classifying no.
+
 ## Price comparison Sonnet against Sol
 
 Price comparison Sonnet against Sol (fourth check, mean per run). Sonnet in USD as billed by the

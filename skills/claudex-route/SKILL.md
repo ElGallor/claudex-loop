@@ -31,26 +31,27 @@ Pick the next step: stay, second opinion, discussion round, investigate blocker,
 
 ## Models
 
-Cost per task: Luna < Sol < Astra; Sonnet < Opus < Fable. Luna/Sol/Astra = Codex, OpenAI allowance. Sonnet/Opus/Fable = Anthropic allowance (spare it). Flash = MiniMax legacy plan (Starter/Lite: measured >= 1,240, plan ~1,500 requests/5 h + weekly cap; live: `coding_plan/remains`), profile `minimax-m3`. Unlisted models (incl. plain `MiniMax-M3`): unused. Haiku: never; built-in agents defaulting to it (e.g. Explore) get explicit `sonnet`, or the sweep goes to Sol/Flash/Luna.
+Cost per task: Luna < Sol < Astra; Haiku < Sonnet < Opus < Fable. Luna/Sol/Astra = Codex, OpenAI allowance. Haiku/Sonnet/Opus/Fable = Anthropic allowance (spare Sonnet/Opus/Fable; Haiku exempt). Flash = MiniMax legacy plan (Starter/Lite: measured >= 1,240, plan ~1,500 requests/5 h + weekly cap; live: `coding_plan/remains`), profile `minimax-m3`. Unlisted models (incl. plain `MiniMax-M3`): unused.
 
 | Model | Effort | For | Not for |
 |---|---|---|---|
-| **Sol** `gpt-6.1-sol` | `low` | Default builder: clear changes/implementation as ONE undivided brief. All bulk and diligence work, whoever coordinates: reading, sweeps, inventories, summaries, routine backend, refactoring, docs, reports, documents, plans, analyses. No allowance threshold. | Architecture decisions. Unknown-cause defects. Never `high`. `medium` only if caller measured it for that job. |
-| **Flash** `MiniMax-M3.1-Flash-Preview` | `low` | Builder beside Sol for clear build and diligence: implementation, known-cause fixes, refactoring, docs, inventories, summaries, reports. Sol vs Flash: freer allowance decides; Codex empty -> Flash. Request quota: one large coherent brief (all paths, steps, acceptance), few turns, never piecemeal. Host re-checks quotes, figures, facts. Concepts only as draft, Opus checks. | Judgement, gates, acceptance, assignment/classification quality, unknown-cause search, security code. |
+| **Haiku** `claude-haiku-5-5` / `haiku` | `high` | Default cheap worker for build and research (user decision 2026-10-07 after bench `hk55`): clear changes/implementation as ONE brief, known-cause fixes, refactoring, reading, sweeps, inventories, summaries, research. Claude subagents, workflow agents, agent frontmatter, built-in agents (e.g. Explore). Host re-checks quotes, line numbers, figures. | Judgement, gates, acceptance, classification behind a confidence threshold, relevance/value rating, security code, unknown-cause search. Never `medium` (invented line numbers in the bench). |
+| **Sol** `gpt-6.1-sol` | `low` | Documents, reports, plans, analyses. Builder and bulk when Haiku/Flash are unavailable or Anthropic is tight. No allowance threshold. | Architecture decisions. Unknown-cause defects. Never `high`. `medium` only if caller measured it for that job. |
+| **Flash** `MiniMax-M3.1-Flash-Preview` | `low` | Builder beside Haiku for clear build and diligence: implementation, known-cause fixes, refactoring, docs, inventories, summaries, reports. Haiku vs Flash: Anthropic tight -> Flash. Request quota: one large coherent brief (all paths, steps, acceptance), few turns, never piecemeal. Host re-checks quotes, figures, facts. Concepts only as draft, Opus checks. | Judgement, gates, acceptance, assignment/classification quality, unknown-cause search, security code. |
 | **Luna** `gpt-6-luna` | `high` | Narrow, repeatable, machine-checkable: fixtures, extraction, small helpers, machine-decidable checks. | Judgement checks. Anything without stated acceptance criterion. Never `low`/`medium` (stops before editing). |
 | **Astra** `gpt-6-astra` | `low` build/review, `high` debate | Hard builds: unknown cause, deep debugging taken whole, demanding logic, tracing a value through code. End review of risky builds - once, at the end, read-only. Risky = close to money, gate/security code, field/interface renames with silent consumers. Other side in second opinions and discussion rounds. | Clear builds. End review on every build. Coordinating sub-workers (double cost, no time gain). |
 | **Opus** `claude-opus-5-5` | `high` | Delegate, accept, judge. One side of every discussion round. | Any building. Bulk reading. Condensing large input per task. |
-| **Sonnet** `claude-sonnet-5-5` / `sonnet` | `low` code, `high` documents | Clear assignments where a Claude model is technically required: agent frontmatter, Claude subagents, workflow agents. | Cause-finding, value tracing, review/acceptance judgement. Very large reading loads. Bulk. |
+| **Sonnet** `claude-sonnet-5-5` / `sonnet` | `low` code, `high` documents | Fallback only: a Claude-only part where Haiku failed twice. | Cause-finding, value tracing, review/acceptance judgement. Very large reading loads. Bulk. |
 | **Fable** `claude-fable-5-1` | - | Conception, decomposition, schemas, security concepts, roadmaps. From Codex: second opinion on conception. | Execution after design is agreed. |
 
 Order per work slot:
 
-1. Claude model technically required? -> `sonnet`; if cause-finding, judgement or close to money -> `opus`.
-2. Else Codex or Flash: clear build, diligence -> Sol or Flash `low` (freer allowance); documents, plans, analyses -> Sol `low`; small + machine-checkable -> Luna `high`; genuinely hard -> Astra `low`.
-3. Hard only because vague -> clarify first (goal, inputs as paths, steps, output format, machine-checkable acceptance), then Sol.
+1. Claude model technically required? -> `haiku` (`high`); if cause-finding, judgement or close to money -> `opus`. `sonnet` only after two Haiku failures on the same part.
+2. Else: clear build, diligence, research -> Haiku `high` or Flash `low` (Anthropic tight -> Flash); documents, plans, analyses -> Sol `low`; small + machine-checkable -> Luna `high`; genuinely hard -> Astra `low`.
+3. Hard only because vague -> clarify first (goal, inputs as paths, steps, output format, machine-checkable acceptance), then Haiku.
 4. Opus at no build slot. Only delegating, accepting, judging - incl. Claude-only slots of step 1 with cause-finding, judgement or money.
 
-Balance: keep all three 7-day figures equal. Gap <= 5 points: scopes decide. Larger: heavier side gives way where scopes overlap. Sol and Flash exempt, no threshold. Never build work back to Opus. Figure unknown -> route by scope, say so. Figures, freshness, availability, prices: [kontingent.md](references/kontingent.md).
+Balance: keep all three 7-day figures equal. Gap <= 5 points: scopes decide. Larger: heavier side gives way where scopes overlap. Haiku, Sol and Flash exempt, no threshold. Never build work back to Opus. Figure unknown -> route by scope, say so. Figures, freshness, availability, prices: [kontingent.md](references/kontingent.md).
 
 Evidence (bench checks, credits, price comparison, CLI versions): [messbelege.md](references/messbelege.md). Read only when a choice is contested or a figure is asked. Never quote figures from memory.
 
